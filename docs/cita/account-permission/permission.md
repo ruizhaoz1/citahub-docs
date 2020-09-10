@@ -3,7 +3,7 @@ id: permission
 title: 权限系统
 ---
 
-CITA 的权限系统对用户的操作进行控制，并支持基于角色的权限管理。
+CITA 的权限系统对账户的操作进行控制，并支持基于角色的权限管理。
 
 账户相关信息查看[账户概述]。
 
@@ -18,21 +18,21 @@ CITA 的权限系统对用户的操作进行控制，并支持基于角色的权
 
 由此可表示三种类别的权限：
 
-* 发交易： 由系统内置的的合约地址标识，权限属性为空
-* 创建合约： 由系统内置的的合约地址标识，权限属性为空
-* 调用合约： 分为两类：
-    - 内置的权限： 由系统内置的合约地址标识，权限属性包含系统合约的地址和函数签名
-    - 用户自定义的权限：由用户创建权限时生成的合约地址标识，权限属性包含参数所表示的地址和函数签名
+* 发交易：由系统内置的的合约地址标识，权限属性为空
+* 创建合约：由系统内置的的合约地址标识，权限属性为空
+* 调用合约：
+    - 内置的权限：由系统内置的合约地址标识，权限属性包含系统合约的地址和函数签名
+    - 账户自定义的权限：由账户创建权限时生成的合约地址标识，权限属性包含参数所表示的地址和函数签名
 
 ## 权限系统操作
 
 使用权限系统可进行的一些操作如下：
 
-* 创建权限： 生成权限的标识，属性包含参数所表示的合约地址、函数签名及名称
-* 更新权限： 修改权限的属性
-* 删除权限： 删除权限
-* 授予权限： 授予账户权限
-* 取消授权： 撤销对目标账户某种权限
+* 创建权限：生成权限的标识，属性包含参数所表示的合约地址、函数签名及名称
+* 更新权限：修改权限的属性
+* 删除权限：删除权限
+* 授予权限：授予账户权限
+* 取消授权：撤销对目标账户某种权限
 
 具体接口定义可查看[权限系统接口]。
 
@@ -40,9 +40,9 @@ CITA 的权限系统对用户的操作进行控制，并支持基于角色的权
 
 CITA 在起链的时候可以对权限系统进行配置，默认是关闭的（即没有权限检查）。有三个配置项：
 
-* `checkCallPermission`: 表示对合约调用的权限进行检查
-* `checkSendTxPermission`: 表示对发送交易的权限进行检查
-* `checkCreateContractPermission`: 表示对创建合约的权限进行检查
+* `checkCallPermission`：表示对合约调用的权限进行检查
+* `checkSendTxPermission`：表示对发送交易的权限进行检查
+* `checkCreateContractPermission`：表示对创建合约的权限进行检查
 
 **注意：**
 
@@ -52,7 +52,7 @@ CITA 在起链的时候可以对权限系统进行配置，默认是关闭的（
 
 ## 系统内置权限
 
-用户可自定义权限，其中系统内置了几种权限(禁止对其进行删除操作)，如下所示：
+账户可自定义权限，其中系统内置了几种权限（禁止对其进行删除操作），如下所示：
 
 | name                | permission
 | ------------------- | -----------
@@ -61,13 +61,13 @@ CITA 在起链的时候可以对权限系统进行配置，默认是关闭的（
 | `newPermission`     | 表示创建一个新的权限权限
 | `deletePermission`  | 表示删除一个权限权限
 | `updatePermission`  | 表示更新一个权限权限
-| `setAuth`           | 表示对账号进行授权权限
-| `cancelAuth`        | 表示对帐号取消授权权限
+| `setAuth`           | 表示对账户进行授权权限
+| `cancelAuth`        | 表示对账户取消授权权限
 | `newRole`           | 表示创建一个新的角色权限
 | `deleteRole`        | 表示删除一个角色权限
 | `updateRole`        | 表示更新一个角色权限
-| `setRole`           | 表示对账号授予角色权限
-| `cancelRole`        | 表示对帐号取消授予角色权限
+| `setRole`           | 表示对账户授予角色权限
+| `cancelRole`        | 表示对账户取消授予角色权限
 | `newGroup`          | 表示创建一个新组权限
 | `deleteGroup`       | 表示删除一个组权限
 | `updateGroup`       | 表示更新一个组权限
@@ -83,11 +83,13 @@ CITA 在起链的时候可以对权限系统进行配置，默认是关闭的（
 
 对应地址信息可查看[已使用地址列表]。
 
-## 操作示例
+## 使用示例
+
+> 接下来的测试，用 [cita-cli] 命令行模式进行演示，操作类接口调用需要有相应的权限。
 
 ### 修改系统配置
 
-通过以下命令生成配置文件(打开所有权限系统配置)：
+通过以下命令生成配置文件（打开所有权限系统配置）：
 
 ```bash
 $ bin/cita create \
@@ -96,7 +98,7 @@ $ bin/cita create \
 	--contract_arguments SysConfig.checkCallPermission=true SysConfig.checkSendTxPermission=true SysConfig.checkCreateContractPermission=true
 ```
 
-启动链的接下来的步骤见 [运行 CITA] 部分。接下来的测试，用 [cita-cli](https://github.com/cryptape/cita-cli) 命令行模式（与交互式模式的命令是一致的）进行演示。
+启动链的接下来的步骤见 [运行 CITA] 部分。接下来的测试，用 [cita-cli](https://github.com/citahub/cita-cli) 命令行模式（与交互式模式的命令是一致的）进行演示。
 
 ### 生成普通账户
 
@@ -106,7 +108,7 @@ $ bin/cita create \
 
 #### 授予发交易和部署合约权限
 
-由于设置了权限的检查开关，所有用户默认是没有发交易及创建合约的权限的。首先需要通过 superAdmin 对其授 sendTx 发送交易及 createContract 创建合约权限。
+由于设置了权限的检查开关，所有账户默认是没有发交易及创建合约的权限的。首先需要通过 superAdmin 对其授 sendTx 发送交易及 createContract 创建合约权限。
 
 发送交易权限地址为 `0xffffffffffffffffffffffffffffffffff021000`，创建合约权限地址为 `0xffffffffffffffffffffffffffffffffff021001`
 
@@ -200,7 +202,7 @@ $ cita-cli rpc getTransactionReceipt \
 
 参考[部署合约]。
 
-如果用户想要调用测试合约的接口，需要根据接口生成一个新的权限，然后由 admin 把权限赋予用户。
+如果账户想要调用测试合约的接口，需要根据接口生成一个新的权限，然后由 admin 把权限赋予账户。
 
 ### 生成新的权限
 
@@ -291,7 +293,7 @@ $ cita-cli rpc getTransactionReceipt \
 
 ### 使用新权限
 
-#### 把新权限赋予测试用户
+#### 把新权限赋予测试账户
 
 由超级管理员进行操作。
 
@@ -391,10 +393,10 @@ $ cita-cli scm Authorization queryPermissions \
 可以看出结果已经是 1 了。
 
 [已使用地址列表]: ../addresses#已使用地址列表
-[权限系统接口]: ../system-contract-interface/interface#newpermission
+[权限系统接口]: ../sys-contract-interface/interface#权限系统合约
 [权限系统操作示例]: ./permission-example
-[测试合约]: https://github.com/cryptape/test-contracts/blob/master/SimpleStorage.sol
-[生成账户]: ../advanced-use/contracts/solidity
+[测试合约]: https://github.com/citahub/test-contracts/blob/master/SimpleStorage.sol
+[生成账户]: ../advanced-use/contracts/solidity#生成账户
 [调用合约]: ../advanced-use/contracts/solidity#调用
 [账户概述]: ./account#账户概述
 [运行 CITA]: ../getting-started/run-cita

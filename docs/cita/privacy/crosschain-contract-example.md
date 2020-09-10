@@ -10,7 +10,7 @@ sidebar_label: 侧链
 
 ### 跨链合约示例
 
-可以参照[示例合约](https://github.com/cryptape/test-contracts/blob/master/MyToken.sol)。
+可以参照[示例合约](https://github.com/citahub/test-contracts/blob/master/MyToken.sol)。
 
 这是一个可以跨链转移 token 的 Token 合约。
 
@@ -28,7 +28,7 @@ sidebar_label: 侧链
 
 `send_to_side_chain` 中 `destFuncHasher` 是 `recv_from_side_chain` 的 function signature 。用来确保发送方和接受方的合约是匹配的。
 
-`txDataSize` 是跨链传递的数据的大小。即 `send_to_side_chain` 除去前两个参数（固定必须的参数）之后所有参数的总大小，这些参数需要以bytes的方式传递。
+`txDataSize` 是跨链传递的数据的大小。即 `send_to_side_chain` 除去前两个参数（固定必须的参数）之后所有参数的总大小，这些参数需要以 bytes 的方式传递。
 
 `nonce` 是为了防止跨链交易重放攻击增加的，作用同 `CITA` 交易中的 `nonce` 。
 
@@ -46,11 +46,11 @@ sidebar_label: 侧链
 
 ### 新建、注册和启动侧链
 
-目前，侧链使用系统合约 [ChainManager](https://github.com/cryptape/cita/blob/develop/scripts/contracts/src/system/ChainManager.sol) 进行管理。
+目前，侧链使用系统合约 [ChainManager](https://github.com/citahub/cita/blob/develop/scripts/contracts/src/system/ChainManager.sol) 进行管理。
 
-* 生成侧链的验证节点的私钥，使用侧链的验证节点地址，在主链上使用系统合约 `ChainManager` 的方法 `newSideChain` 进行新建侧链，得到侧链的 Id 。
-* 在主链上使用系统合约 `ChainManager` 的方法 `enableSideChain` 启动指定 Id 的侧链。
-* 新建侧链，创世块里的系统合约 `ChainManager` 构造时，使用上一个步骤申请的侧链 Id 、主链的 Id 和主链的验证节点地址作为参数。
+* 生成侧链的验证节点的私钥，使用侧链的验证节点地址，在主链上使用系统合约 `ChainManager` 的方法 `newSideChain` 进行新建侧链，得到侧链的 ID 。
+* 在主链上使用系统合约 `ChainManager` 的方法 `enableSideChain` 启动指定 ID 的侧链。
+* 新建侧链，创世块里的系统合约 `ChainManager` 构造时，使用上一个步骤申请的侧链 ID 、主链的 ID 和主链的验证节点地址作为参数。
 * 启动侧链即可。
 
 ### 部署跨链合约
@@ -60,14 +60,14 @@ sidebar_label: 侧链
 ### 发送跨链交易
 
 调用任意一条链的跨链合约的 `send_to_side_chain` 方法，
-使用接收链（另一条链）的 Id 、接收链跨链合约的合约地址和转移的 token 数量作为参数，
+使用接收链（另一条链）的 ID 、接收链跨链合约的合约地址和转移的 token 数量作为参数，
 发送跨链转移 token 交易，并得到交易 hash 。
 
 在操作步骤中不区分主链和侧链。
 
 ### 使用 Relayer 工具发送跨链交易到目标链
 
-使用跨链交易的交易 hash 、该交易所在链的 Id，和一个配置文件作为入参调用工具：
+使用跨链交易的交易 hash 、该交易所在链的 ID，和一个配置文件作为入参调用工具：
 
 ```shell
 cita-relayer-parser -c SEND_CHAIN_ID -t TX_HASH -f relayer-parser.json
@@ -76,7 +76,7 @@ cita-relayer-parser -c SEND_CHAIN_ID -t TX_HASH -f relayer-parser.json
 其中配置文件 `relayer-parser.json` 目前主要有 2 个参数：
 
 * 工具使用的私钥。
-* 所有相关链的 JSON-RPC 网络地址，使用 Id 作为索引。
+* 所有相关链的 JSON-RPC 网络地址，使用 ID 作为索引。
 
 范例如下：
 
@@ -109,7 +109,7 @@ cita-relayer-parser -c SEND_CHAIN_ID -t TX_HASH -f relayer-parser.json
 该工具主要做的任务为：
 
 * 根据入参，去发送链上查询跨链交易的交易证明数据。
-* 根据跨链交易的交易证明数据，得到转移 token 的接收链的 Id 。
+* 根据跨链交易的交易证明数据，得到转移 token 的接收链的 ID 。
 * 发送证明到接收链上，完成 token 转移。
 
 ### 验证跨链是否成功
@@ -124,9 +124,9 @@ cita-relayer-parser -c SEND_CHAIN_ID -t TX_HASH -f relayer-parser.json
 将这个证明发送到主链上的`ChainManager`系统合约中的`verifyState`，对证明进行校验之后会进行后续处理。
 
 ### relay block header
-`state proof`功能需要将侧链的block header同步到主链。
+`state proof`功能需要将侧链的 block header 同步到主链。
 
-relayer可以在侧链上调用`getBlockHeader`，获取指定高度的侧链的`block header`，然后将数据发送到主链上的`ChainManager`系统合约`verifyBlockHeader`。
+relayer 可以在侧链上调用`getBlockHeader`，获取指定高度的侧链的`block header`，然后将数据发送到主链上的`ChainManager`系统合约`verifyBlockHeader`。
 
 `ChainManager`系统合约验证之后，保存侧链每个高度的`state root`，用来验证用户提交的`state proof`。
 
@@ -135,6 +135,6 @@ relayer可以在侧链上调用`getBlockHeader`，获取指定高度的侧链的
 ### 侧链交易的确定性
 考虑极端的情况，侧链可能随时退出。
 
-因此用户在侧链上发生的交易，必须等交易所在的block的header同步到主链，交易才算确定。
+因此用户在侧链上发生的交易，必须等交易所在的 block 的 header 同步到主链，交易才算确定。
 
 这样即使侧链退出，也可以用过`state proof`的方式在主链上恢复对应的资产。

@@ -8,6 +8,7 @@
         "type": "subcategory",
         "ids": [
           "cita/getting-started/setup",
+          "cita/getting-started/run-cli",
           "cita/getting-started/run-cita",
           "cita/getting-started/basic-usage"
         ]
@@ -65,7 +66,6 @@
         "type": "subcategory",
         "ids": [
           "cita/privacy/privacy-intro",
-          "cita/privacy/zktx",
           "cita/privacy/crosschain-contract-example"
         ]
       },
@@ -197,6 +197,6 @@
         ]
       }
     ],
-    "Contributing": ["contributing", "roadmap"]
+    "Contributing": ["contributing"]
   }
 }

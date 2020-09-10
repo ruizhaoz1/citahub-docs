@@ -5,7 +5,7 @@ title: 环境准备
 
 ## 适用操作系统声明
 
-系统支持以及版本建议：Centos（7.2+）、Ubuntu（16.04、18.04）、Redhat (7.4)
+系统支持以及版本建议：CentOS（7.2+）、Ubuntu（16.04、18.04）、Redhat (7.4)
 
 
 ## 硬件配置建议
@@ -18,7 +18,7 @@ title: 环境准备
 
 ## 软件依赖声明
 
-* 依赖 Docker，安装 Docker 参见 [Docker 在线资料]。
+* 依赖 Docker，安装 Docker 参见 [Docker 在线资料] , 请安装 18.09 及以上的版本。
 * CITA 的 Docker 镜像托管在 [DockerHub]。 因为 CITA 是基于 Ubuntu 18.04 稳定版开发的，因此该镜像中封装了 Ubuntu 18.04 还有其他一些 CITA 运行所需要的配置和文件。
 
 ## 安装 CITA 客户端工具
@@ -38,18 +38,18 @@ title: 环境准备
 3. 下载 CITA-CLI 安装包
 
    ```shell
-   $ wget https://github.com/cryptape/cita-cli/releases/download/0.19.6/cita-cli-x86_64-musl-tls-0.19.6.tar.gz
+   $ wget https://github.com/citahub/cita-cli/releases/download/20.2.2/cita-cli-x86_64-musl-tls-20.2.2.tar.gz
    ```
 
-   > 注：这里所下载的是 CITA-CLI 是 linux 系统下的二进制发布包，如果你使用 MacOS，请按以下命令下载对应系统的 CITA-CLI：
+   > 注：这里所下载的是 CITA-CLI 是 Linux 系统下的二进制发布包，如果你使用 macOS，请按以下命令下载对应系统的 CITA-CLI：
    >
-   > $ wget https://github.com/cryptape/cita-cli/releases/download/0.19.6/cita-cli-x86_64-mac-osx-tls-0.19.6.tar.gz
+   > $ wget https://github.com/citahub/cita-cli/releases/download/20.2.2/cita-cli-x86_64-mac-osx-tls-20.2.2.tar.gz
    >
 
 4. 解压程序
 
    ```shell
-   $ tar zxvf cita-cli-x86_64-musl-tls-0.19.6.tar.gz
+   $ tar zxvf cita-cli-x86_64-musl-tls-20.2.2.tar.gz
    ```
 
 5. 复制 CITA-CLI 到 系统可执行文件目录下
@@ -69,7 +69,7 @@ title: 环境准备
 2. 下载 CITA 安装包
 
    ```shell
-   $ wget https://github.com/cryptape/cita/releases/download/v1.0.0/cita_secp256k1_sha3.tar.gz
+   $ wget https://github.com/citahub/cita/releases/download/v20.2.0/cita_secp256k1_sha3.tar.gz
    ```
 
 3. 解压 CITA 程序

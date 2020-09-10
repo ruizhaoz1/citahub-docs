@@ -9,17 +9,17 @@ CITA 采用[共识节点管理系统合约]来实现共识节点的管理，通�
 
 对于共识节点的管理，包括添加、删除及设置共识节点出块权重。下面我们将用具体的示例来阐述。
 
-* 增加共识节点 - 操作只可由超级管理员执行;
-* 删除共识节点 - 操作只可由超级管理员执行;
+* 增加共识节点 - 操作只可由超级管理员执行；
+* 删除共识节点 - 操作只可由超级管理员执行；
 * 设置共识节点权重。
 
 ## 增加共识节点
 
-节点需先被添加成为普通节点（参考普通节点管理），才能申请成为共识节点，由超级管理员(拥有超级管理员角色的账号)确认才完成了添加操作。
+节点需先被添加成为普通节点（参考普通节点管理），才能申请成为共识节点，由超级管理员（拥有超级管理员角色的账号）确认才完成了添加操作。
 
 从普通节点升级到共识节点，具体操作需要用到上面合约方法 `approveNode(address)`。
 
-共识节点管理合约是系统合约，默认将放在创世块上，下面使用 [solc] 命令(solidity 的命令行编译器，在 CITA 镜像中已安装)查看共识节点管理合约的 hash：
+共识节点管理合约是系统合约，默认将放在创世块上，下面使用 [solc] 命令（solidity 的命令行编译器，在 CITA 镜像中已安装）查看共识节点管理合约的 hash：
 
 ```bash
 $ solc --hashes system/node_manager.sol --allow-paths .
@@ -70,7 +70,7 @@ $ cita-cli scm NodeManager approveNode \
     --url http://127.0.0.1:1337
 ```
 
-  其中 `--admin-privkey` 是超级管理员私钥，系统默认的超级管理员私钥可以看 [超级管理员账户信息]。
+  其中 `--admin-privkey` 是超级管理员私钥，系统默认的超级管理员私钥可以看[超级管理员账户信息]。
 
 输出：
 
@@ -185,7 +185,7 @@ $ cita-cli scm NodeManager deleteNode \
     --url http://127.0.0.1:1337
 ```
 
-  其中 `--admin-privkey` 是超级管理员私钥，系统默认的超级管理员私钥可以看 [超级管理员账户信息]。
+  其中 `--admin-privkey` 是超级管理员私钥，系统默认的超级管理员私钥可以看[超级管理员账户信息]。
 
 输出：
 
@@ -272,16 +272,16 @@ $ cita-cli scm NodeManager listNode --url http://127.0.0.1:1337
 CITA 作为许可链共识节点采用轮流出块的方式进行出块。作为公有许可链可以根据节点的出块权重分配出块权，超级管理员可以设置每个出块节点的 Stake 来调整出块权重。
 
 出块权重按照每个出块节点所占的千分比进行分配，对于小数部分采用的 [Largest_remainder_method] 算法进行分配。
-每次出块时，查询共识节点的权重，根据权重计算出每个节点在 1000 个块中可以出的块个数，这 1000 个块算为一个 epoch，再将这1000个块出块顺序以创世块的时间戳为种子进行随机排序。
+每次出块时，查询共识节点的权重，根据权重计算出每个节点在 1000 个块中可以出的块个数，这 1000 个块算为一个 epoch，再将这 1000 个块出块顺序以创世块的时间戳为种子进行随机排序。
 如果在同一个 epoch 中出块节点列表和权重没有变化，共识将会按照此顺序进行出块；如果节点列表和权重有变化，将按照新的顺序进行出块。
 
-[setStake 接口] 可对共识节点出块权重进行配置。
-[stakepermillage 接口] 可查询共识节点出块权重千分比（目前只对 Charge 模型开放）。
+[setStake 接口]可对共识节点出块权重进行配置。
+[stakePermillage 接口]可查询共识节点出块权重千分比（目前只对 Charge 模型开放）。
 
-[共识节点管理系统合约]: ../system-contract-interface/interface#interface#approveNode
-[setStake 接口]: https://docs.citahub.com/zh-CN/0.23.0/cita/system-contract-interface/interface#setstake
+[共识节点管理系统合约]: ../sys-contract-interface/interface#interface#approveNode
+[setStake 接口]: ../sys-contract-interface/interface#setstake
 [solc]: https://solidity-cn.readthedocs.io/zh/develop/installing-solidity.html
 [超级管理员账户信息]: ../getting-started/run-cita
-[cita-cli]: https://github.com/cryptape/cita-cli
+[cita-cli]: https://github.com/citahub/cita-cli
 [Largest_remainder_method]: https://en.wikipedia.org/wiki/Largest_remainder_method
-[stakepermillage 接口]: https://docs.citahub.com/zh-CN/cita/sys-contract-interface/interface#stakepermillage
+[stakePermillage 接口]: ../sys-contract-interface/interface#stakepermillage

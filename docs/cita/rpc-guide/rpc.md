@@ -1,11 +1,11 @@
 ---
 id: rpc
-title: JSON RPC 列表
+title: JSON-RPC 列表
 ---
 
 > **Methods Name Changed ！** For the user of V0.16 and older versions: Please pay attention that we deprecated the pre-fix in the name of JSON-RPC interfaces, which makes it looks more tidy and easier to use.
 
-## JSON RPC
+## JSON-RPC
 
 ### peerCount
 
@@ -19,19 +19,19 @@ title: JSON RPC 列表
 
 `Quantity` - 本节点连接节点个数
 
-示例:
+示例：
 
-Request:
+Request：
 
 ```shell
-$ curl -X POST --data '{"jsonrpc":"2.0","method":"peerCount","params":[],"id":74}' 127.0.0.1:1337 | jq
+$ curl -X POST --data '{"jsonrpc":"2.0","method":"peerCount","params":[],"id":1}' 127.0.0.1:1337 | jq
 ```
 
-Result:
+Result：
 
 ```json
 {
-    "id": 74,
+    "id": 1,
     "jsonrpc": "2.0",
     "result": "0x3"
 }
@@ -51,34 +51,35 @@ Result:
 
 PeerInfo object - 节点信息对象
 
-* amount: `Quantity` - 和该节点相连的节点数量
-* peers: `Object` - 节点信息，包括节点地址和节点 `ip` 地址
-* errorMessage: `String` - 错误信息
+* amount：`Quantity` - 和该节点相连的节点数量
+* peers：`Object` - 节点信息，包括节点地址和节点 `ip` 地址
+* errorMessage：`String` - 错误信息
 
-示例:
+示例：
 
-Request:
+Request：
 
 ```shell
-$ curl -X POST --data '{"jsonrpc":"2.0","method":"peersInfo","params":[],"id":83}' 127.0.0.1:1337 | jq
+$ curl -X POST --data '{"jsonrpc":"2.0","method":"peersInfo","params":[],"id":1}' 127.0.0.1:1337 | jq
 ```
 
-Result:
+Result：
 
 ```json
 {
-    "jsonrpc":"2.0",
-    "id":83,
-    "result":{
-        "amount":3,
-        "peers":{
-            "0x2aaeacf658e49f58973b4ef6f37a5c574a28822c":"127.0.0.1",
-            "0x3ea53608732da3761ef41805da73f0d45d3e8e09":"127.0.0.1",
-            "0x01cb0a8012b75ea156eaef3e827547f760dd917a":"127.0.0.1"
-        },
-        "errorMessage":null
-    }
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "amount": 3,
+    "peers": {
+     "0x2aaeacf658e49f58973b4ef6f37a5c574a28822c": "127.0.0.1",
+     "0x3ea53608732da3761ef41805da73f0d45d3e8e09": "127.0.0.1",
+     "0x01cb0a8012b75ea156eaef3e827547f760dd917a": "127.0.0.1"
+    },
+    "errorMessage": null
+  }
 }
+
 ```
 
 * * *
@@ -95,19 +96,19 @@ Result:
 
 `Quantity` - 链高度
 
-示例:
+示例：
 
-Request:
+Request：
 
 ```shell
-$ curl -X POST --data '{"jsonrpc":"2.0","method":"blockNumber","params":[],"id":83}' 127.0.0.1:1337 | jq
+$ curl -X POST --data '{"jsonrpc":"2.0","method":"blockNumber","params":[],"id":1}' 127.0.0.1:1337 | jq
 ```
 
-Result:
+Result：
 
 ```json
 {
-    "id": 83,
+    "id": 1,
     "jsonrpc": "2.0",
     "result": "0x1d10"
 }
@@ -121,7 +122,7 @@ Result:
 
 * 参数
 
-1. `Data`, 签名后的交易数据
+`Data`, 签名后的交易数据
 
 ```js
 const signed_data = "0a9b0412013018fface20420f73b2a8d046060604052341561000f57600080fd5b5b60646000819055507f8fb1356be6b2a4e49ee94447eb9dcb8783f51c41dcddfe7919f945017d163bf3336064604051808373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018281526020019250505060405180910390a15b5b610178806100956000396000f30060606040526000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806360fe47b1146100495780636d4ce63c1461006c575b600080fd5b341561005457600080fd5b61006a6004808035906020019091905050610095565b005b341561007757600080fd5b61007f610142565b6040518082815260200191505060405180910390f35b7fc6d8c0af6d21f291e7c359603aa97e0ed500f04db6e983b9fce75a91c6b8da6b816040518082815260200191505060405180910390a1806000819055507ffd28ec3ec2555238d8ad6f9faf3e4cd10e574ce7e7ef28b73caa53f9512f65b93382604051808373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018281526020019250505060405180910390a15b50565b6000805490505b905600a165627a7a72305820631927ec00e7a86b68950c2304ba2614a8dcb84780b339fc2bfe442bba418ce800291241884bfdfd8e417ab286fd761d42b71a9544071d91084c56f9063471ce82e266122a8f9a24614e1cf75070eea301bf1e7a65857def86093b6892e09ae7d0bcdff901"
@@ -131,15 +132,16 @@ const signed_data = "0a9b0412013018fface20420f73b2a8d046060604052341561000f57600
 
 `Data32` - 交易哈希
 
-示例:
+示例：
 
-Request:
+Request：
+> 注意：测试时不能直接复制如下参数中的数据，因为签名后的交易数据包含交易上链最大区块高度等信息。
 
 ```shell
 $ curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":["0x0a910212013218fface20420a0492a8302606060405234156100105760006000fd5b610015565b60e0806100236000396000f30060606040526000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806360fe47b114604b5780636d4ce63c14606c576045565b60006000fd5b341560565760006000fd5b606a60048080359060200190919050506093565b005b341560775760006000fd5b607d60a3565b6040518082815260200191505060405180910390f35b8060006000508190909055505b50565b6000600060005054905060b1565b905600a165627a7a72305820942223976c6dd48a3aa1d4749f45ad270915cfacd9c0bf3583c018d4c86f9da200291241edd3fb02bc1e844e1a6743e8986a61e1d8a584aac26db5fa1ce5b32700eba5d16ba4c754731f43692f3f5299e85176627e55b9f61f5fe3e43572ec8c535b0d9201"],"id":1}' 127.0.0.1:1337 | jq
 ```
 
-Result:
+Result：
 
 ```json
 {
@@ -167,7 +169,7 @@ Result:
 
 #### 关于签名交易
 
-1. 了解一下 CITA 交易结构
+* CITA 交易结构
 
 ```protobuf
 // Transaction
@@ -197,11 +199,11 @@ message UnverifiedTransaction {
 }
 ```
 
-一些交易字段的说明:
+一些交易字段的说明：
 
 * `to` 交易接收地址。
 
-调用合约时即为被调用合约的地址，部署合约时不填写该字段。**注意**地址是长度 40 的十六进制字符(160 位)，前导 0 不能省略，必须补全。
+调用合约时即为被调用合约的地址，部署合约时不填写该字段。**注意**地址是长度 40 的十六进制字符（160 位），前导 0 不能省略，必须补全。
 
 * `nonce` 交易填充字段。
 
@@ -213,11 +215,11 @@ message UnverifiedTransaction {
 
 * `valid_until_block` 交易上链最大区块高度。
 
-区块链发送交易和得到交易执行结果是一个异步过程，交易进入交易池即返回交易哈希值。后面需要用户轮询交易什么时候真正上链。由于不同时间系统的拥堵情况，等待时间并不是一个确定值，甚至有可能在后续环节发生错误，最终没有上链。因此用户轮询一段时间之后，发现交易还没有上链，这时无法确定交易的状态(失败还是拥堵)。发送交易操作没有幂等性，因此无法通过重复发送交易来解决这个问题。因此，需要一个类似超时的机制，保证等待一段时间之后，交易的状态就确定是失败的。
+区块链发送交易和得到交易执行结果是一个异步过程，交易进入交易池即返回交易哈希值。后面需要用户轮询交易什么时候真正上链。由于不同时间系统的拥堵情况，等待时间并不是一个确定值，甚至有可能在后续环节发生错误，最终没有上链。因此用户轮询一段时间之后，发现交易还没有上链，这时无法确定交易的状态（失败还是拥堵）。发送交易操作没有幂等性，因此无法通过重复发送交易来解决这个问题。因此，需要一个类似超时的机制，保证等待一段时间之后，交易的状态就确定是失败的。
 
 `valid_until_block` 字段就是这样一种机制，用来表示用户愿意等待交易上链的最大区块高度。在区块链达到该高度之后，交易就确定不会再上链了，用户可以放心地重新发送交易，或者进行其他的后续处理。实际使用中，**可选值**当前区块高度到当前区块高度 +100 之间。
 
-* `data` 合约对应的 `Bytecode`, 参考:
+* `data` 合约对应的 `Bytecode`, 参考：
 
     - [How-to-get-the-bytecode-of-a-transaction-using-the-solidity-browser](https://ethereum.stackexchange.com/questions/8115/how-to-get-the-bytecode-of-a-transaction-using-the-solidity-browser)
     - [Solidity docs](https://solidity.readthedocs.io/en/develop/)
@@ -240,7 +242,7 @@ message UnverifiedTransaction {
 
 ### getVersion
 
-获取当前 CITA 软件的版本号，该接口设置了使能开关，需要在链创建时通过使能选项开启该功能，才能正常使用。详细查看 [链级配置] 中的 `--enable_version` 选项说明。
+获取当前 CITA 软件的版本号，该接口设置了使能开关，需要在链创建时通过使能选项开启该功能，才能正常使用。详细查看[链级配置]中的 `--enable_version` 选项说明。
 
 * 参数
 
@@ -250,23 +252,23 @@ message UnverifiedTransaction {
 
 `String` - 软件版本号
 
-示例:
+示例：
 
-Request:
+Request：
 
 ```shell
-$ curl -X POST --data '{"jsonrpc":"2.0","method":"getVersion","params":[],"id":83}' 127.0.0.1:1337 | jq
+$ curl -X POST --data '{"jsonrpc":"2.0","method":"getVersion","params":[],"id":1}' 127.0.0.1:1337 | jq
 ```
 
-Result:
+Result：
 
 ```json
 {
-    "jsonrpc":"2.0",
-    "id":83,
-    "result":{
-        "softwareVersion":"v0.22.0"
-    }
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "softwareVersion": "20.2.0"
+  }
 }
 ```
 
@@ -279,21 +281,21 @@ Result:
 * 参数
 
 1. `Data32` - 块哈希值
-2. `Boolean` - 是否返回交易信息(True: 返回详细交易列表 | False: 只返回交易哈希)
+2. `Boolean` - 是否返回交易信息（True：返回详细交易列表 | False：只返回交易哈希）
 
 * 返回值
 
 1. `Object` - 块对象，如果不存在，则返回空
 
-示例:
+示例：
 
-Request:
+Request：
 
 ```shell
 $ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":["0x296474ecb4c2c8c92b0ba7800a01530b70a6f2b6e76e5c2ed2f89356429ef329", true],"id":1}' 127.0.0.1:1337 | jq
 ```
 
-Result:
+Result：
 
 ```json
 {
@@ -345,30 +347,18 @@ Result:
 * 参数
 
 1. `Quantity` - 高度
-2. `Boolean` - 是否返回交易信息(True: 返回详细交易列表 | False: 只返回交易哈希)
+2. `Boolean` - 是否返回交易信息（True：返回详细交易列表 | False：只返回交易哈希）
 
 * 返回值
 
 结果同 [getBlockByHash](#getblockbyhash)
 
-示例:
+示例：
 
-Request:
+Request：
 
 ```shell
 $ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByNumber","params":["0xF9", true],"id":1}' 127.0.0.1:1337 | jq
-```
-
-* Invalid Params
-
-```shell
-$ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByNumber","params":["0XF9", true],"id":1}' 127.0.0.1:1337 | jq
-```
-
-或者
-
-```shell
-$ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByNumber","params":[249, true],"id":1}' 127.0.0.1:1337 | jq
 ```
 
 高度参数可以用 0x 开头的十六进制。0x 开头或者十进制整数都是错误的参数格式。
@@ -389,22 +379,22 @@ $ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByNumber","params":[24
 
 Object - 回执对象
 
-* transactionHash: `Data32` - 交易哈希
-* transactionIndex: `Quantity` - 交易 `index`
-* blockHash: `Data32` - 交易所在块的块哈希
-* blockNumber: `Quantity` - 交易所在块的块高度
-* cumulativeQuotaUsed: `Quantity` - 块中该交易之前(包含该交易)的所有交易消耗的 quota 总量
-* quotaUsed: `Quantity` - 交易消耗的 quota 数量
-* contractAddress: `Data20` - 如果是部署合约, 这个地址指的是新创建出来的合约地址. 否则为空
-* logs: `Array` - 交易产生的日志集合
-* root: `Data32` - 状态树根
-* errorMessage: `String` 错误信息
+* transactionHash：`Data32` - 交易哈希
+* transactionIndex：`Quantity` - 交易 `index`
+* blockHash：`Data32` - 交易所在块的块哈希
+* blockNumber：`Quantity` - 交易所在块的块高度
+* cumulativeQuotaUsed：`Quantity` - 块中该交易之前（包含该交易）的所有交易消耗的 quota 总量
+* quotaUsed：`Quantity` - 交易消耗的 quota 数量
+* contractAddress：`Data20` - 如果是部署合约, 这个地址指的是新创建出来的合约地址，否则为空
+* logs：`Array` - 交易产生的日志集合
+* root：`Data32` - 状态树根
+* errorMessage：`String` 错误信息
 
-回执错误:
+回执错误：
 
 * No transaction permission - 没有发交易权限
 * No contract permission - 没有创建合约权限
-* Not enough base quota - [基础配额] 不够
+* Not enough base quota - [基础配额]不够
 * Block quota limit reached - 达到块配额限制
 * Account quota limit reached - 达到账户配额限制
 * Out of quota - 配额不够
@@ -417,50 +407,50 @@ Object - 回执对象
 * Out of bounds - EVM 内部错误
 * Reverted - EVM 内部错误，[REVERTED instruction](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-140.md)
 
-示例:
+示例：
 
-Request:
+Request：
 
 ```shell
 $ curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionReceipt","params":["0xb38e5b6572b2613cab8088f93e6835576209f2b796104779b4a43fa5adc737af"],"id":1}' 127.0.0.1:1337 | jq
 ```
 
-Result:
+Result：
 
 ```json
 {
-    "jsonrpc":"2.0",
-    "id":1,
+    "jsonrpc": "2.0",
+    "id": 1,
     "result":{
-        "transactionHash":"0xb38e5b6572b2613cab8088f93e6835576209f2b796104779b4a43fa5adc737af",
-        "transactionIndex":"0x0",
-        "blockHash":"0xe068cf7299450b78fe97ed370fd9ebe09ecbd6786968e474fae862ccbd5c5020",
-        "blockNumber":"0xa",
-        "cumulativeQuotaUsed":"0x17a0f",
-        "quotaUsed":"0x17a0f",
-        "contractAddress":"0xea4f6bc98b456ef085da5c424db710489848cab5",
+        "transactionHash": "0xb38e5b6572b2613cab8088f93e6835576209f2b796104779b4a43fa5adc737af",
+        "transactionIndex": "0x0",
+        "blockHash": "0xe068cf7299450b78fe97ed370fd9ebe09ecbd6786968e474fae862ccbd5c5020",
+        "blockNumber": "0xa",
+        "cumulativeQuotaUsed": "0x17a0f",
+        "quotaUsed": "0x17a0f",
+        "contractAddress": "0xea4f6bc98b456ef085da5c424db710489848cab5",
         "logs":[
             {
-                "address":"0xea4f6bc98b456ef085da5c424db710489848cab5",
+                "address": "0xea4f6bc98b456ef085da5c424db710489848cab5",
                 "topics":[
                     "0x8fb1356be6b2a4e49ee94447eb9dcb8783f51c41dcddfe7919f945017d163bf3"
                 ],
-                "data":"0x0000000000000000000000005b073e9233944b5e729e46d618f0d8edf3d9c34a0000000000000000000000000000000000000000000000000000000000000064",
-                "blockHash":"0xe068cf7299450b78fe97ed370fd9ebe09ecbd6786968e474fae862ccbd5c5020",
-                "blockNumber":"0xa",
-                "transactionHash":"0xb38e5b6572b2613cab8088f93e6835576209f2b796104779b4a43fa5adc737af",
-                "transactionIndex":"0x0",
-                "logIndex":"0x0",
-                "transactionLogIndex":"0x0"
+                "data": "0x0000000000000000000000005b073e9233944b5e729e46d618f0d8edf3d9c34a0000000000000000000000000000000000000000000000000000000000000064",
+                "blockHash": "0xe068cf7299450b78fe97ed370fd9ebe09ecbd6786968e474fae862ccbd5c5020",
+                "blockNumber": "0xa",
+                "transactionHash": "0xb38e5b6572b2613cab8088f93e6835576209f2b796104779b4a43fa5adc737af",
+                "transactionIndex": "0x0",
+                "logIndex": "0x0",
+                "transactionLogIndex": "0x0"
             }
         ],
-        "root":"0xe702d654a292a8d074fd5ba3769b3dead8095d2a8f2207b3a69bd49c91a178af",
-        "logsBloom":"0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100040000000010000200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        "root": "0xe702d654a292a8d074fd5ba3769b3dead8095d2a8f2207b3a69bd49c91a178af",
+        "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100040000000010000200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
     }
 }
 ```
 
-Error:
+Error：
 
 ```json
 {
@@ -478,7 +468,7 @@ Error:
 }
 ```
 
-如果出现 **Timeout，errorcode 99** ，请查看可能的解决方法[Can't assign requested Address](https://vincent.bernat.im/en/blog/2014-tcp-time-wait-state-linux)
+如果出现 **Timeout，errorcode 99** ，请查看可能的解决方法 [Can't assign requested Address](https://vincent.bernat.im/en/blog/2014-tcp-time-wait-state-linux)
 
 * * *
 
@@ -500,31 +490,31 @@ Error:
 
 示例:
 
-Request:
+Request：
 
 ```shell
-$ curl -X POST --data '{"jsonrpc":"2.0","method":"getLogs","params":[{"topics":["0x8fb1356be6b2a4e49ee94447eb9dcb8783f51c41dcddfe7919f945017d163bf3"],"fromBlock": "0x0"}],"id":74}' 127.0.0.1:1337 | jq
+$ curl -X POST --data '{"jsonrpc":"2.0","method":"getLogs","params":[{"topics":["0x8fb1356be6b2a4e49ee94447eb9dcb8783f51c41dcddfe7919f945017d163bf3"],"fromBlock": "0x0"}],"id":1}' 127.0.0.1:1337 | jq
 ```
 
-Result:
+Result：
 
 ```json
 {
-    "jsonrpc":"2.0",
-    "id":74,
+    "jsonrpc": "2.0",
+    "id": 1,
     "result":[
         {
-            "address":"0xea4f6bc98b456ef085da5c424db710489848cab5",
+            "address": "0xea4f6bc98b456ef085da5c424db710489848cab5",
             "topics":[
                 "0x8fb1356be6b2a4e49ee94447eb9dcb8783f51c41dcddfe7919f945017d163bf3"
             ],
-            "data":"0x0000000000000000000000005b073e9233944b5e729e46d618f0d8edf3d9c34a0000000000000000000000000000000000000000000000000000000000000064",
-            "blockHash":"0x3e83b74560860344f4c48d7b8089a18173aecd96b6b2148653c61b5d3f559764",
-            "blockNumber":"0x4",
-            "transactionHash":"0xb38e5b6572b2613cab8088f93e6835576209f2b796104779b4a43fa5adc737af",
-            "transactionIndex":"0x0",
-            "logIndex":"0x0",
-            "transactionLogIndex":"0x0"
+            "data": "0x0000000000000000000000005b073e9233944b5e729e46d618f0d8edf3d9c34a0000000000000000000000000000000000000000000000000000000000000064",
+            "blockHash": "0x3e83b74560860344f4c48d7b8089a18173aecd96b6b2148653c61b5d3f559764",
+            "blockNumber": "0x4",
+            "transactionHash": "0xb38e5b6572b2613cab8088f93e6835576209f2b796104779b4a43fa5adc737af",
+            "transactionIndex": "0x0",
+            "logIndex": "0x0",
+            "transactionLogIndex": "0x0"
         }
     ]
 }
@@ -545,20 +535,20 @@ Result:
 
 `Data32` - 交易哈希
 
-示例:
+示例：
 
-Request:
+Request：
 
 ```shell
-$ curl -X POST --data '{"jsonrpc":"2.0","method":"call","params":[{"from":"0xca35b7d915458ef540ade6068dfe2f44e8fa733c","to":"0xea4f6bc98b456ef085da5c424db710489848cab5","data":"0x6d4ce63c"}, "latest"],"id":2}' 127.0.0.1:1337 | jq
+$ curl -X POST --data '{"jsonrpc":"2.0","method":"call","params":[{"from":"0xca35b7d915458ef540ade6068dfe2f44e8fa733c","to":"0xea4f6bc98b456ef085da5c424db710489848cab5","data":"0x6d4ce63c"}, "latest"],"id":1}' 127.0.0.1:1337 | jq
 ```
 
-Result:
+Result：
 
 ```json
 {
     "jsonrpc": "2.0",
-    "id": 2,
+    "id": 1,
     "result": "0x0000000000000000000000000000000000000000000000000000000000000064"
 }
 
@@ -578,22 +568,22 @@ Result:
 
 Object - 交易对象，如果没有则为空
 
-* hash: `Data32` - 交易哈希
-* content: `Data` 交易内容
-* from: `Data20` - 交易发送者
-* blockHash: `Data32` - 交易所在块的块哈希，如果没有，则为空
-* blockNumber: `Quantity` - 交易所在块的块高度，如果没有，则为空
-* index: `Quantity` - 交易在块交易体内的位置，如果没有，则为空
+* hash：`Data32` - 交易哈希
+* content：`Data` 交易内容
+* from：`Data20` - 交易发送者
+* blockHash：`Data32` - 交易所在块的块哈希，如果没有，则为空
+* blockNumber：`Quantity` - 交易所在块的块高度，如果没有，则为空
+* index：`Quantity` - 交易在块交易体内的位置，如果没有，则为空
 
-示例:
+示例：
 
-Request:
+Request：
 
 ```shell
 $ curl -X POST --data '{"jsonrpc":"2.0","method":"getTransaction","params":["0x019abfa50cbb6df5b6dc41eabba47db4e7eb1787a96fd5836820d581287e0236"],"id":1}' 127.0.0.1:1337 | jq
 ```
 
-Result:
+Result：
 
 ```json
 {
@@ -625,15 +615,15 @@ Result:
 
 `Quantity` - 指定账户从块高 0 到指定高度所发送的交易总量
 
-示例:
+示例：
 
-Request:
+Request：
 
 ```shell
 $ curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionCount","params":["0x5b073e9233944b5e729e46d618f0d8edf3d9c34a","latest"],"id":1}' 127.0.0.1:1337 | jq
 ```
 
-Result:
+Result：
 
 ```json
 {
@@ -659,15 +649,15 @@ Result:
 
 `Data` - 合约 `Byte code`
 
-示例:
+示例：
 
-Request:
+Request：
 
 ```shell
 $ curl -X POST --data '{"jsonrpc":"2.0","method":"getCode","params":["0xea4f6bc98b456ef085da5c424db710489848cab5", "latest"],"id":1}' 127.0.0.1:1337 | jq
 ```
 
-Result:
+Result：
 
 ```json
 {
@@ -692,15 +682,15 @@ Result:
 
 `Data` - 合约 `ABI` 信息
 
-示例:
+示例：
 
-Request:
+Request：
 
 ```shell
 $ curl -X POST --data '{"jsonrpc":"2.0","method":"getAbi","params":["0x73552bc4e960a1d53013b40074569ea05b950b4d", "latest"],"id":1}' 127.0.0.1:1337 | jq
 ```
 
-Result:
+Result：
 
 ```json
 {
@@ -720,11 +710,10 @@ Result:
 主要步骤：
 
 1. 部署合约，得到合约地址。
-2. 使用 `solc` 编译合约代码得到 `ABI`，以 `String` 类型编码成相应参数，详情见 [Ethereum Contract ABI]。
-3. 构造交易 `data`，前 20 字节为合约地址，后面字节为 `abi` 的编码成的。
-4. 发送交易，使用 `sendRawTransaction` 接口。
+2. 使用 `solc` 编译合约代码得到 `ABI`内容，并填充 data 字段。
+3. 使用 `cita-cli store abi` 保存 `ABI` 内容。
 
-以 [Test contract] 作为示例:
+以 [Test contract] 作为示例：
 
 * 链上部署该合约，得到合约地址
 * 首先可以通过 `solc` 得到合约的`ABI`
@@ -734,26 +723,16 @@ $ solc SimpleStorage.sol --abi
 ```
 
 输出：
+
 ```json
 [{"constant":false,"inputs":[{"name":"x","type":"uint256"}],"name":"set","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"get","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"}]
-```
-
-* 将 `ABI` 作为 `String` 类型，构造 `data`，编码结果如下：
-
-```shell
-$ cita-cli ethabi encode params --param string "[{"constant":false,"inputs":[{"name":"x","type":"uint256"}],"name":"set","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"get","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"}]"
-```
-
-
-```
-000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000002aa307863663733353235623338306335623730366633356331666630326161373938636339393530383630303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303032303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030656635623762363336663665373337343631366537343361363636313663373336353263363936653730373537343733336135623762366536313664363533613738326337343739373036353361373536393665373433323335333637643564326336653631366436353361373336353734326336663735373437303735373437333361356235643263373036313739363136323663363533613636363136633733363532633733373436313734363534643735373436313632363936633639373437393361366536663665373036313739363136323663363532633734373937303635336136363735366536333734363936663665376432633762363336663665373337343631366537343361373437323735363532633639366537303735373437333361356235643263366536313664363533613637363537343263366637353734373037353734373333613562376236653631366436353361326337343739373036353361373536393665373433323335333637643564326337303631373936313632366336353361363636313663373336353263373337343631373436353464373537343631363236393663363937343739336137363639363537373263373437393730363533613636373536653633373436393666366537643564303030303030303030303030303030303030303030303030303030303030303030300000000000000000000000000000000000000000000000
 ```
 
 * Store ABI
 
 ```bash
 $ cita-cli store abi \
-    --content 0xcf73525b380c5b706f35c1ff02aa798cc9950860000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000ef5b7b636f6e7374616e743a66616c73652c696e707574733a5b7b6e616d653a782c747970653a75696e743235367d5d2c6e616d653a7365742c6f7574707574733a5b5d2c70617961626c653a66616c73652c73746174654d75746162696c6974793a6e6f6e70617961626c652c747970653a66756e6374696f6e7d2c7b636f6e7374616e743a747275652c696e707574733a5b5d2c6e616d653a6765742c6f7574707574733a5b7b6e616d653a2c747970653a75696e743235367d5d2c70617961626c653a66616c73652c73746174654d75746162696c6974793a766965772c747970653a66756e6374696f6e7d5d0000000000000000000000000000000000 \
+    --content '[{"constant":false,"inputs":[{"name":"x","type":"uint256"}],"name":"set","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"get","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"}]' \
     --address 0xcf73525b380c5b706f35c1ff02aa798cc9950860 \
     --private-key 0x5f0258a4778057a8a7d97809bd209055b2fbafa654ce7d31ec7191066b9225e6 \
     --url http://127.0.0.1:1337
@@ -763,7 +742,7 @@ $ cita-cli store abi \
 
 ```json
 {
-    "id": 3,
+    "id": 4,
     "jsonrpc": "2.0",
     "result": {
         "hash": "0x3690665c3ce5548e74113ab88b1bc81b72f48564211f1341735b9fb17914ff91",
@@ -786,9 +765,11 @@ $ cita-cli rpc getAbi \
 {
     "id": 1,
     "jsonrpc": "2.0",
-    "result": "0x000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000002aa3078636637333532356233383063356237303666333563316666303261613739386363393935303836303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030323030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030306566356237623633366636653733373436313665373433613636363136633733363532633639366537303735373437333361356237623665363136643635336137383263373437393730363533613735363936653734333233353336376435643263366536313664363533613733363537343263366637353734373037353734373333613562356432633730363137393631363236633635336136363631366337333635326337333734363137343635346437353734363136323639366336393734373933613665366636653730363137393631363236633635326337343739373036353361363637353665363337343639366636653764326337623633366636653733373436313665373433613734373237353635326336393665373037353734373333613562356432633665363136643635336136373635373432633666373537343730373537343733336135623762366536313664363533613263373437393730363533613735363936653734333233353336376435643263373036313739363136323663363533613636363136633733363532633733373436313734363534643735373436313632363936633639373437393361373636393635373732633734373937303635336136363735366536333734363936663665376435643030303030303030303030303030303030303030303030303030303030303030303000000000000000000000000000000000000000000000"
+    "result": "0x5b7b22636f6e7374616e74223a66616c73652c22696e70757473223a5b7b226e616d65223a2278222c2274797065223a2275696e74323536227d5d2c226e616d65223a22736574222c226f757470757473223a5b5d2c2270617961626c65223a66616c73652c2273746174654d75746162696c697479223a226e6f6e70617961626c65222c2274797065223a2266756e6374696f6e227d2c7b22636f6e7374616e74223a747275652c22696e70757473223a5b5d2c226e616d65223a22676574222c226f757470757473223a5b7b226e616d65223a22222c2274797065223a2275696e74323536227d5d2c2270617961626c65223a66616c73652c2273746174654d75746162696c697479223a2276696577222c2274797065223a2266756e6374696f6e227d5d"
 }
 ```
+
+注：使用 cita-cli 查询到的结果是 abi 字符串的十六进制 Ascii 编码。
 
 * * *
 
@@ -805,13 +786,13 @@ $ cita-cli rpc getAbi \
 
 `Quantity` - 在指定高度的账户余额
 
-示例:
+示例：
 
 ```shell
 $ curl -X POST --data '{"jsonrpc":"2.0","method":"getBalance","params":["0xea4f6bc98b456ef085da5c424db710489848cab5", "latest"],"id":1}' 127.0.0.1:1337 | jq
 ```
 
-Result:
+Result：
 
 ```json
 {
@@ -830,24 +811,24 @@ Result:
 
 * 参数
 
-1. `Filter` - 过滤器对象，详见 `Filter` 的说明。 由于是获取上次操作以来的状态改变，所以 Filter 中的 `from_block` 以及 `to_block` 没有作用，可以不用设置。
+1. `Filter` - 过滤器对象，详见 `Filter` 的说明。 由于是获取上次操作以来的状态改变，所以 Filter 中的 `fromBlock` 以及 `toBlock` 没有作用，可以不用设置。
 
 
 * 返回值
 
 `Quantity` - 过滤器 id
 
-示例:
+示例：
 
 ```shell
 $ curl -X POST --data '{"jsonrpc":"2.0","method":"newFilter","params":[{"topics":["0x8fb1356be6b2a4e49ee94447eb9dcb8783f51c41dcddfe7919f945017d163bf3"]}],"id":1}' 127.0.0.1:1337 | jq
 ```
 
-Result:
+Result：
 
 ```json
 {
-    "id":1,
+    "id": 1,
     "jsonrpc": "2.0",
     "result": "0x1"
 }
@@ -868,17 +849,17 @@ Result:
 
 `Quantity` - 过滤器 id
 
-示例:
+示例：
 
 ```shell
-$ curl -X POST --data '{"jsonrpc":"2.0","method":"newBlockFilter","params":[],"id":73}' 127.0.0.1:1337 | jq
+$ curl -X POST --data '{"jsonrpc":"2.0","method":"newBlockFilter","params":[],"id":1}' 127.0.0.1:1337 | jq
 ```
 
-Result:
+Result：
 
 ```json
 {
-    "id":1,
+    "id": 1,
     "jsonrpc":  "2.0",
     "result": "0x1"
 }
@@ -898,17 +879,17 @@ Result:
 
 `Boolean` - 卸载成功返回 true，否则 false
 
-示例:
+示例：
 
 ```shell
-$ curl -X POST --data '{"jsonrpc":"2.0","method":"uninstallFilter","params":["0xb"],"id":73}' 127.0.0.1:1337 | jq
+$ curl -X POST --data '{"jsonrpc":"2.0","method":"uninstallFilter","params":["0xb"],"id":1}' 127.0.0.1:1337 | jq
 ```
 
-Result:
+Result：
 
 ```json
 {
-    "id":1,
+    "id": 1,
     "jsonrpc": "2.0",
     "result": true
 }
@@ -928,44 +909,44 @@ Result:
 
 `Array` - log 对象集合，如果没有，则为空
 
-* 块过滤器(`BlockFilter`)会返回自上次操作过滤器（调用 newBlockFilter 以及 getFilterChanges）以来产生新块的块哈希值集合
-* 状态过滤器(`NewFilter`)会根据 `Filter` 过滤返回自上次操作过滤器（调用 newFilter, getFilterLogs 以及 getFilterChanges）状态变化
+* 块过滤器（`BlockFilter`）会返回自上次操作过滤器（调用 newBlockFilter 以及 getFilterChanges）以来产生新块的块哈希值集合
+* 状态过滤器（`NewFilter`）会根据 `Filter` 过滤返回自上次操作过滤器（调用 newFilter, getFilterLogs 以及 getFilterChanges）状态变化
 
-示例:
+示例：
 
 ```shell
-$ curl -X POST --data '{"jsonrpc":"2.0","method":"getFilterChanges","params":["0x16"],"id":74}' 127.0.0.1:1337 | jq
+$ curl -X POST --data '{"jsonrpc":"2.0","method":"getFilterChanges","params":["0x16"],"id":1}' 127.0.0.1:1337 | jq
 ```
 
-NewFilter Result:
+NewFilter Result：
 
 ```json
 {
-    "jsonrpc":"2.0",
-    "id":74,
+    "jsonrpc": "2.0",
+    "id": 1,
     "result":[
         {
-            "address":"0xea4f6bc98b456ef085da5c424db710489848cab5",
+            "address": "0xea4f6bc98b456ef085da5c424db710489848cab5",
             "topics":[
                 "0x8fb1356be6b2a4e49ee94447eb9dcb8783f51c41dcddfe7919f945017d163bf3"
             ],
-            "data":"0x0000000000000000000000005b073e9233944b5e729e46d618f0d8edf3d9c34a0000000000000000000000000000000000000000000000000000000000000064",
-            "blockHash":"0x3e83b74560860344f4c48d7b8089a18173aecd96b6b2148653c61b5d3f559764",
-            "blockNumber":"0x4",
-            "transactionHash":"0xb38e5b6572b2613cab8088f93e6835576209f2b796104779b4a43fa5adc737af",
-            "transactionIndex":"0x0",
-            "logIndex":"0x0",
-            "transactionLogIndex":"0x0"
+            "data": "0x0000000000000000000000005b073e9233944b5e729e46d618f0d8edf3d9c34a0000000000000000000000000000000000000000000000000000000000000064",
+            "blockHash": "0x3e83b74560860344f4c48d7b8089a18173aecd96b6b2148653c61b5d3f559764",
+            "blockNumber": "0x4",
+            "transactionHash": "0xb38e5b6572b2613cab8088f93e6835576209f2b796104779b4a43fa5adc737af",
+            "transactionIndex": "0x0",
+            "logIndex": "0x0",
+            "transactionLogIndex": "0x0"
         }
     ]
 }
 ```
 
 ```shell
-$ curl -X POST --data '{"jsonrpc":"2.0","method":"getFilterChanges","params":["0x3"],"id":74}' 127.0.0.1:1337 | jq
+$ curl -X POST --data '{"jsonrpc":"2.0","method":"getFilterChanges","params":["0x3"],"id":1}' 127.0.0.1:1337 | jq
 ```
 
-BlockFilter Result:
+BlockFilter Result：
 
 ```json
 {
@@ -994,7 +975,7 @@ BlockFilter Result:
 
 `Array` - log 对象集合，如果自上次轮询以来没有发生变化，则为空
 
-示例:
+示例：
 
 结果同 [getFilterChanges](#getfilterchanges)
 
@@ -1012,15 +993,15 @@ BlockFilter Result:
 
 `Data` - 一份包含交易，交易回执，回执树根和块头的证明
 
-示例:
+示例：
 
-Request:
+Request：
 
 ```shell
 $ curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionProof","params":["0x37f1261203d7b81a5a5cfc4a5c4abf15297555a47fd8686580d5a211876516c4"],"id":1}' 127.0.0.1:1337 | jq
 ```
 
-Result:
+Result：
 
 ```json
 {
@@ -1055,15 +1036,15 @@ Result:
     * `version`, `Integer` - 链版本
     * `economicalModel`, `EconomicalModel` - 链经济模型
 
-示例:
+示例：
 
-Request:
+Request：
 
 ```shell
 $ curl -X POST --data '{"jsonrpc":"2.0","method":"getMetaData","params":["latest"],"id":1}' 127.0.0.1:1337
 ```
 
-Result:
+Result：
 
 ```json
 {
@@ -1077,7 +1058,7 @@ Result:
         "economicalModel": 1,
         "genesisTimestamp": 1541058686340,
         "operator": "test-operator",
-        "tokenAvatar": "https://cdn.cryptape.com/icon_cita.png",
+        "tokenAvatar": "https://cdn.citahub.com/icon_cita.png",
         "tokenName": "CITA Test Token",
         "tokenSymbol": "CTT",
         "validators": [
@@ -1106,15 +1087,15 @@ Result:
 
 `Data` - 块头序列化后的字节码
 
-示例:
+示例：
 
-Request:
+Request：
 
 ```shell
 $ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockHeader","params":["latest"],"id":1}' 127.0.0.1:1337
 ```
 
-Result:
+Result：
 
 ```json
 {
@@ -1140,13 +1121,13 @@ Result:
 
 `Data` - 某一个值的状态证明，包含合约地址，账户证明，键值证明
 
-示例:
+示例：
 
 ```shell
 $ curl -X POST --data '{"jsonrpc":"2.0","method":"getStateProof","params":["0xad54ae137c6c39fa413fa1da7db6463e3ae45664", "0xa40893b0c723e74515c3164afb5b2a310dd5854fac8823bfbffa1d912e98423e", "16"],"id":1}' 127.0.0.1:1337
 ```
 
-Result:
+Result：
 
 ```json
 {
@@ -1172,13 +1153,13 @@ Result:
 
 `Data` - 指定高度下，合约 `key` 值对应的 `value` 值
 
-示例:
+示例：
 
 ```shell
 $ curl -X POST --data '{"jsonrpc":"2.0","method":"getStorageAt","params":["0xffffffffffffffffffffffffffffffffff020000", "0x0000000000000000000000000000000000000000000000000000000000000007", "latest"],"id":1}' 127.0.0.1:1337
 ```
 
-Result:
+Result：
 
 ```json
 {
@@ -1193,6 +1174,6 @@ Result:
 [How-to-get-the-bytecode-of-a-transaction-using-the-solidity-browser]: https://ethereum.stackexchange.com/questions/8115/how-to-get-the-bytecode-of-a-transaction-using-the-solidity-browser
 [Ethereum Contract ABI]: https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI
 [Solidity docs]: https://solidity.readthedocs.io/en/develop/
-[Test contract]: https://github.com/cryptape/test-contracts/blob/master/SimpleStorage.sol
+[Test contract]: https://github.com/citahub/test-contracts/blob/master/SimpleStorage.sol
 [链级配置]: ../configuration-guide/chain-config
 [基础配额]: ../faq#什么是交易的基础配额

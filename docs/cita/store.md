@@ -6,10 +6,10 @@ title: 存证
 ## 简述
 
 存证功能是将 **数据信息** 通过交易的方式存储到区块链上。
-
+CITA 的存证是链原生的功能，不同于 Solidity 合约。存证内容仅存在交易中，不经过 VM 处理，不占世界状态空间。
 ### 账户信息
 
-账户地址为: `0xffffffffffffffffffffffffffffffffff010000`
+账户地址为：`0xffffffffffffffffffffffffffffffffff010000`
 
 注：
 CITA 系统会将所有发送至该账户地址的交易默认为 **存证** 交易。
@@ -153,5 +153,5 @@ tx decode-unverifiedTransaction --content 0x0ab101122064356565386436313239333634
 其中，解析后的 `data` 域正是上文存证的原始数据。
 
 [JSON-RPC 说明]: rpc-guide/rpc
-[cita-cli]: https://github.com/cryptape/cita-cli
+[cita-cli]: https://github.com/citahub/cita-cli
 [启动 CITA]: getting-started/run-cita#启动-cita

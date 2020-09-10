@@ -3,32 +3,6 @@ id: run-cita
 title: 运行 CITA
 ---
 
-## 创建超级管理员账户地址、私钥、公钥
-
-执行命令：
-
-```shell
-$ cita-cli key create
-```
-
-命令返回:
-
-```json
-{
-  "address": "0x37d1c7449bfe76fe9c445e626da06265e9377601",
-  "private": "0x3ef2627393529fed043c7dbfd9358a4ae47a88a59949b07e7631722fd6959002",
-  "public": "0x9dc6fc7856f5271e6e8c45e5c5fe22d2ff699ac3b24497599be77803d3c25fb4e2fe7da616c65a291910c947c89923009f354634421bddd0a25cd0a509bcf6a9"
-}
-```
-
-> 注：此处为示例公私钥对，不要在生产环境复制使用，其中：
->
-> * "address", 帐号地址；
-> * "private", 帐号私钥；
-> * "public", 帐户公钥。
->
-> 由于每次执行命令生成的结果都不同，以下所有的示例操作均使用本次生成的结果。
-
 ## 配置 CITA
 
 1. 进入 CITA 目录：
@@ -37,7 +11,7 @@ $ cita-cli key create
    $ cd cita_secp256k1_sha3
    ```
 
-2. 初始化链：
+2. 初始化链(注意：如果使用的系统是 CentOS 7 请先关闭 selinux 再执行如下命令)：
 
    ```shell
    $ bin/cita create --super_admin "0x37d1c7449bfe76fe9c445e626da06265e9377601" --nodes "127.0.0.1:4000,127.0.0.1:4001,127.0.0.1:4002,127.0.0.1:4003"
@@ -45,9 +19,9 @@ $ cita-cli key create
 
    其中：
    * super_admin 为超级管理员账号地址；请采用上一步执行结果的为准。
-   * nodes 是要部署的节点地址（IP:Port）。
+   * nodes 是要部署的节点地址（IP:PORT）。
 
-   > * 注1：以上是简单的配置，系统会默认一些参数，更多自定义参数请见 [链级配置]；
+   > * 注1：以上是简单的配置，系统会默认一些参数，更多自定义参数请见[链级配置]；
    > * 注2：以上操作是在一台服务器上部署 4 个 CITA 节点，如要将节点部署到多台服务器，初始化链时 --nodes 需要填写服务器真实 IP:PORT；
    > * 注3：如果未安装 CITA 的 Docker 环境，会自动拉取镜像，并启动 CITA 容器。
 
@@ -55,6 +29,12 @@ $ cita-cli key create
 
 第一次启动 CITA 时需要使用 `setup` 命令初始化每个节点，之后重新启动不需要再次操作。
 更多信息可查看 `bin/cita help` 中 `setup` 部分。
+> * 注：setup 或 start 节点时，节点号后面存证多余的"/"， 会报错
+错误写法示例： 
+```shell 
+$ bin/cita setup test-chain/0/
+$ bin/cita start test-chain/0/
+```
 
 1. 启动节点 0
 

@@ -31,8 +31,8 @@ CITA 的节点发现机制通过 [network 网络配置] 中的 `enable_discovery
      0  1  2  3  4  template
    ```
 
-   - append 子命令，在指定链中增加对应 ip 地址的节点
-   - 脚本将自动生成 4 号节点，并在原有节点中 `test-chain/*/network.toml` 中插入新节点的 ip 及端口配置
+   - append 子命令，在指定链中增加对应 ip 地址的节点。
+   - 脚本将自动生成 4 号节点，并在原有节点中 `test-chain/*/network.toml` 中插入新节点的 ip 及端口配置。
 
 3. 启动新节点：
 
@@ -42,7 +42,7 @@ CITA 的节点发现机制通过 [network 网络配置] 中的 `enable_discovery
 
    **a. 此时的新节点为普通节点，不参与共识选举，即只能同步数据和接收 jsonrpc 请求。**
 
-   **b. 当 [network 网络配置] 为 `enable_discovery = false` 时，需要在原来节点的 `network.toml` 文件中 `peers` 域添加新节点信息。**
+   **b. 当 [network 网络配置]为 `enable_discovery = false` 时，需要在原来节点的 `network.toml` 文件中 `peers` 域添加新节点信息。**
 
    ```shell
    $ ./bin/cita setup test-chain/4
@@ -51,8 +51,8 @@ CITA 的节点发现机制通过 [network 网络配置] 中的 `enable_discovery
 
 ## 删除普通节点
 
-* 当 [network 网络配置] 为 `enable_discovery = false` 时，到对应节点目录下，找到 `network.toml`，删除对应 `peers` 条目即可。
+* 当 [network 网络配置]为 `enable_discovery = false` 时，到对应节点目录下，找到 `network.toml`，删除对应 `peers` 条目即可。
 
-* 当 [network 网络配置] 为 `enable_discovery = true` 时，一个节点主动下线，该节点便在网络中被移除。
+* 当 [network 网络配置]为 `enable_discovery = true` 时，一个节点主动下线，该节点便在网络中被移除。
 
 [network 网络配置]: ../configuration-guide/service-config#network
